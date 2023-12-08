@@ -64,8 +64,11 @@ class UserService extends Database
     }
     public function logout()
     {
-        unset($_SESSION['user']);
+        $params = session_get_cookie_params();
+        //unset($_SESSION['user']);
+        session_destroy();
 
-        session_regenerate_id();
+        //session_regenerate_id();
+        setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
     }
 }
